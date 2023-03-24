@@ -1,0 +1,16 @@
+[tool.poetry]
+name = "proxy-server"
+version = "0.1.0"
+description = "Proxy-server to unit various sources"
+authors = ["Aibulat Notfullin"]
+readme = "README.md"
+packages = [{include = "proxy_server"}]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+pre-commit = "^3.2.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
