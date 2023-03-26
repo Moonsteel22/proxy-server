@@ -5,6 +5,11 @@ from api.models import GasStation, Service, StationFuel
 
 
 def second_source_import_task():
+    """
+    Задача по импорту данных из 2-го источника
+    Данные в базу добавляются пачками по 4096
+    :return:
+    """
     _batch = 4096
 
     source_handler = SecondSource()
@@ -13,7 +18,6 @@ def second_source_import_task():
 
     fuels = []
     for item in objects:
-
         fuels.extend(
             [
                 StationFuel.from_schema(gas_station_id=item.id, schema=fuel)
@@ -27,6 +31,11 @@ def second_source_import_task():
 
 
 def first_source_import_task():
+    """
+    Задача по импорту данных из 1-го источника
+    Данные в базу добавляются пачками по 4096
+    :return:
+    """
     _batch = 4096
 
     fake = Faker()

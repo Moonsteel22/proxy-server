@@ -21,6 +21,11 @@ class FirstSource:
         self.fake = fake
 
     def get_data(self) -> Generator[GasInfo, None, None]:
+        """
+        Данный метод генерирует тестовые данные.
+        Возвращает GasInfo - информация об АЗС
+        :return: Generator[GasInfo, None, None]
+        """
         _urls = [
             "https://www.tatneft.ru/uploads/photos/Frame-5-6172756e81141.png",
             "https://tatneft-info.ru/wp-content/uploads/2021/01/zapravki-tatneft.jpg",

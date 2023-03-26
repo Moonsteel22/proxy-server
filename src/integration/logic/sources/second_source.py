@@ -11,6 +11,11 @@ FUEL_EXPONENT = 10
 class SecondSource:
     @staticmethod
     def get_data() -> Generator[StationFuelInfo, None, None]:
+        """
+        Данный метод генерирует тестовые данные.
+        Возвращает StationFuelInfo - информация об топливе АЗС
+        :return: Generator[StationFuelInfo, None, None]
+        """
         _fuel_types = [f"Fuel - {i}" for i in range(1, FUEL_EXPONENT * 10 - 1)]
         return (
             StationFuelInfo(
