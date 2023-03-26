@@ -16,6 +16,7 @@ psycopg2-binary = "^2.9.5"
 pillow = "^9.4.0"
 django-environ = "^0.10.0"
 django-celery-beat = "^2.5.0"
+djangorestframework = "^3.14.0"
 
 
 [build-system]

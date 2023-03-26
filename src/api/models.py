@@ -36,7 +36,9 @@ class GasStation(Model):
 class Service(Model):
     name = models.CharField(max_length=127)
     icon = models.ImageField(null=True)
-    gas_station = models.ForeignKey(GasStation, on_delete=models.CASCADE)
+    gas_station = models.ForeignKey(
+        GasStation, related_name="services", on_delete=models.CASCADE
+    )
 
     @classmethod
     def from_schema(
@@ -47,7 +49,9 @@ class Service(Model):
 
 class StationFuel(Model):
     price = models.DecimalField(max_digits=16, decimal_places=2)
-    gas_station = models.ForeignKey(GasStation, on_delete=models.CASCADE)
+    gas_station = models.ForeignKey(
+        GasStation, related_name="station_fuels", on_delete=models.CASCADE
+    )
     currency = models.CharField(max_length=31, default="roubles")
     name = models.CharField(max_length=127, null=True)
     icon = models.ImageField(null=True)
