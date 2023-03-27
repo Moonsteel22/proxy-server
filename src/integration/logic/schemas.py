@@ -3,6 +3,10 @@ from dataclasses import dataclass
 
 @dataclass
 class Coordinates:
+    """
+    Координаты. Ширина и долгота
+    """
+
     def __init__(self, latitude: float, longitude: float):
         self._longitude = longitude
         self._latitude = latitude
@@ -36,6 +40,10 @@ class Service:
 
 @dataclass
 class GasInfo:
+    """
+    Информация об АЗС.
+    """
+
     id: int
     number: int
     coords: Coordinates
@@ -46,6 +54,10 @@ class GasInfo:
 
 @dataclass
 class FuelInfo:
+    """
+    Информация о топливе
+    """
+
     name: str
     price: Money
     currency: str
@@ -53,5 +65,9 @@ class FuelInfo:
 
 @dataclass
 class StationFuelInfo:
+    """
+    Список топлива в АЗС
+    """
+
     id: int
     fuels: list[FuelInfo]

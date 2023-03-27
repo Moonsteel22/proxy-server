@@ -13,7 +13,6 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 import os
 from pathlib import Path
 import environ
-from celery.schedules import crontab
 
 # Initialise environment variables
 
@@ -48,6 +47,7 @@ INSTALLED_APPS = [
     "api",
     "django_celery_beat",
     "rest_framework",
+    "proxy",
 ]
 
 MIDDLEWARE = [
@@ -90,7 +90,7 @@ DATABASES = {
         "NAME": env("POSTGRES_DB_NAME"),
         "USER": env("POSTGRES_USER"),
         "PASSWORD": env("POSTGRES_PASSWORD"),
-        "HOST": "localhost",
+        "HOST": env("POSTGRES_HOST"),
         "PORT": "5432",
     }
 }
@@ -114,13 +114,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-CELERY_BEAT_SCHEDULE = {
-    "sample_task": {
-        "task": "integration.tasks.first_source_import_task",
-        "schedule": crontab(minute="*/5"),
-    },
-}
-
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.1/topics/i18n/
@@ -137,9 +130,14 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
-STATIC_URL = "static/"
-
+STATIC_URL = "/static/"
+STATIC_ROOT = os.path.join(BASE_DIR, "static")
+STATICFILES_DIRS = []
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+CELERY_BROKER_URL = env("CELERY_BROKER_URL")
+CELERY_RESULT_SERIALIZER = "json"
+CELERY_TASK_SERIALIZER = "json"

@@ -1,0 +1,66 @@
+version: "3.7"
+
+services:
+  backend:
+    build: .
+    command: sh -c "poetry run python manage.py migrate && poetry run gunicorn proxy.wsgi --bind=0.0.0.0:8000"
+    environment:
+      - SECRET_KEY=123
+      - POSTGRES_DB_NAME=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_HOST=db
+      - CELERY_BROKER_URL=redis://proxy_server.redis:6379
+    ports:
+      - target: 8000
+        published: 8000
+    depends_on:
+      - db
+      - celery-beat
+      - celery-worker
+  db:
+    image: postgres:13-alpine
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=test
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+
+  celery-worker:
+    build: .
+    command: poetry run celery -A proxy worker -l info
+    environment:
+      - SECRET_KEY=123
+      - POSTGRES_DB_NAME=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_HOST=db
+      - CELERY_BROKER_URL=redis://proxy_server.redis:6379
+    depends_on:
+      - redis
+
+  celery-beat:
+    build: .
+    command: poetry run celery -A proxy beat -l INFO --scheduler django_celery_beat.schedulers:DatabaseScheduler
+    environment:
+      - SECRET_KEY=123
+      - POSTGRES_DB_NAME=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_HOST=db
+      - CELERY_BROKER_URL=redis://proxy_server.redis:6379
+    depends_on:
+      - redis
+
+  redis:
+    image: redis:7.0.10
+    container_name: proxy_server.redis
+    ports:
+      - target: 6379
+        published: 6379
+
+volumes:
+  postgres_data:
