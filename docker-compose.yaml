@@ -3,7 +3,7 @@ version: "3.7"
 services:
   backend:
     build: .
-    command: sh -c "poetry run python manage.py migrate && poetry run gunicorn proxy.wsgi --bind=0.0.0.0:8000"
+    command: sh -c "poetry run python3 manage.py collectstatic && poetry run python manage.py migrate && poetry run gunicorn proxy.wsgi --bind=0.0.0.0:8000"
     environment:
       - SECRET_KEY=123
       - POSTGRES_DB_NAME=postgres
