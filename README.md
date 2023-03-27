@@ -12,13 +12,11 @@
 
 ``` git clone https://github.com/Moonsteel22/proxy-server.git ```
 
-2. Создайте файл .env и загрузите переменные окружения по образцу из .env-example
-
-3. Запустите контейнеры
+2. Запустите контейнеры
 
 ``` docker-compose up -d ```
 
-4. Создайте суперпользователя для доступа к админке
+3. Создайте суперпользователя для доступа к админке
 
 ``` docker exec -it proxy_server_backend_1 poetry run python manage.py createsuperuser ```
 
