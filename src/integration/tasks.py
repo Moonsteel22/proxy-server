@@ -2,8 +2,10 @@ from faker import Faker
 from integration.logic.sources.first_source import FirstSource
 from integration.logic.sources.second_source import SecondSource
 from api.models import GasStation, Service, StationFuel
+from celery import shared_task
 
 
+@shared_task
 def second_source_import_task():
     """
     Задача по импорту данных из 2-го источника
@@ -30,6 +32,7 @@ def second_source_import_task():
     StationFuel.objects.bulk_create(fuels)
 
 
+@shared_task
 def first_source_import_task():
     """
     Задача по импорту данных из 1-го источника
