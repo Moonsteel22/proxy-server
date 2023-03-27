@@ -9,7 +9,8 @@
 ### API
 
 
-``` api/v1/gas-stations/{id} - Станция АЗС. Включает услуги и цены на топливо ```
+``` /api/v1/gas-stations/{id} - Станция АЗС. Включает услуги и цены на топливо ```
+``` /admin - Админка Django ```
 
 ### Разворачивание
 
@@ -26,6 +27,8 @@
 ``` docker exec -it proxy_server_backend_1 poetry run python manage.py createsuperuser ```
 
 ### Запуск периодических задач по доставанию данных
+
+0. Порядок запуска first -> second
 
 1. Нажмите +add напротив Periodic tasks
 
@@ -44,6 +47,9 @@
 
 ![image](https://user-images.githubusercontent.com/60964414/227890429-2a595c00-eb02-40e7-9be5-1dfa13db0bf6.png)
 
+5. Проверяем, что объекты появились
+
+![image](https://user-images.githubusercontent.com/60964414/227891706-ecbf14f5-dc62-49af-9253-03334b7c116f.png)
 
 
 
