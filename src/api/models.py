@@ -32,6 +32,9 @@ class GasStation(Model):
     class Meta:
         ordering = ["number"]
 
+    def __str__(self):
+        return f"АЗС - {self.number}"
+
 
 class Service(Model):
     name = models.CharField(max_length=127)
@@ -45,6 +48,9 @@ class Service(Model):
         cls: Type["Service"], gas_station: GasStation, schema: ServiceSchema
     ):
         return cls(name=schema.name, gas_station=gas_station)
+
+    def __str__(self):
+        return f"{self.name}"
 
 
 class StationFuel(Model):
@@ -64,3 +70,6 @@ class StationFuel(Model):
             name=schema.name,
             currency=schema.currency,
         )
+
+    def __str__(self):
+        return f"{self.name}"
